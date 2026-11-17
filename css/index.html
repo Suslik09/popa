@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS без загадок</title>
+  <meta name="description" content="Сайт-презентация: селекторы, каскад, блочная модель, раскладка, БЭМ и адаптивность — каждое правило можно увидеть вживую">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f4f2ec">
+  <meta property="og:title" content="CSS без загадок">
+  <meta property="og:description" content="От кода к результату: селекторы, каскад, раскладка, БЭМ и адаптивность">
+  <link rel="icon" href="img/mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержимому</a>
+
+  <header class="topbar">
+    <a class="brand" href="#cover"><span class="brand__tag">.css</span> без загадок</a>
+    <p class="crumbs" id="crumbs">Frontend</p>
+    <div class="toolbar">
+      <button class="tool" type="button" data-action="toc" aria-expanded="false" aria-controls="toc" title="Список всех слайдов (O)">Содержание</button>
+      <button class="tool tool--xray" type="button" data-action="xray" aria-pressed="false" title="Рамка, тег и display каждого элемента (X)">Инспектор</button>
+      <button class="tool tool--css" type="button" data-action="css" aria-pressed="false" title="Выключить все стили страницы (C)">Без CSS</button>
+      <button class="tool tool--icon" type="button" data-action="fullscreen" aria-pressed="false" aria-label="На весь экран" title="На весь экран (F)"><span aria-hidden="true">⤢</span></button>
+      <button class="tool tool--icon" type="button" data-action="theme" aria-pressed="false" aria-label="Тёмная тема" title="Светлая или тёмная тема (T)"><span aria-hidden="true">◐</span></button>
+      <button class="tool tool--icon" type="button" id="hotkeys-btn" popovertarget="hotkeys" aria-label="Горячие клавиши" title="Горячие клавиши"><span aria-hidden="true">?</span></button>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc" aria-label="Содержание">
+    <p class="toc__title">Содержание</p>
+    <ol class="toc__list">
+      <li><a href="#cover">CSS без загадок</a></li>
+      <li><a href="#ideas">Три идеи</a></li>
+      <li><a href="#basics"><span class="toc__num">00</span> Основы CSS</a>
+        <ol>
+          <li><a href="#connect">Подключение</a></li>
+          <li><a href="#selectors">Селекторы</a></li>
+          <li><a href="#combinators">Комбинаторы</a></li>
+          <li><a href="#cascade">Каскад</a></li>
+          <li><a href="#specificity">Специфичность</a></li>
+          <li><a href="#inherit">Наследование</a></li>
+          <li><a href="#box">Блочная модель</a></li>
+          <li><a href="#spacing">Margin и padding</a></li>
+          <li><a href="#paint">Цвет и шрифт</a></li>
+          <li><a href="#units">px, em и rem</a></li>
+          <li><a href="#vars">Переменные</a></li>
+          <li><a href="#pseudo">Псевдоклассы</a></li>
+        </ol>
+      </li>
+      <li><a href="#pos-block"><span class="toc__num">01</span> Позиционирование</a>
+        <ol>
+          <li><a href="#position">Поток, relative, absolute</a></li>
+          <li><a href="#layers">sticky и z-index</a></li>
+        </ol>
+      </li>
+      <li><a href="#flex-block"><span class="toc__num">02</span> Flexbox</a>
+        <ol>
+          <li><a href="#flex">Оси и выравнивание</a></li>
+          <li><a href="#grow">Перенос и flex: 1</a></li>
+        </ol>
+      </li>
+      <li><a href="#grid-block"><span class="toc__num">03</span> Grid</a>
+        <ol>
+          <li><a href="#grid">Колонки и minmax</a></li>
+          <li><a href="#areas">Области страницы</a></li>
+        </ol>
+      </li>
+      <li><a href="#bem-block"><span class="toc__num">04</span> БЭМ</a>
+        <ol>
+          <li><a href="#bem">Блок, элемент, модификатор</a></li>
+          <li><a href="#flat">Имена и зависимость от HTML</a></li>
+        </ol>
+      </li>
+      <li><a href="#scss-block"><span class="toc__num">05</span> SCSS</a>
+        <ol>
+          <li><a href="#scss">Вложенность и миксины</a></li>
+        </ol>
+      </li>
+      <li><a href="#adapt-block"><span class="toc__num">06</span> Адаптивность</a>
+        <ol>
+          <li><a href="#adapt">Viewport и колонки</a></li>
+        </ol>
+      </li>
+      <li><a href="#browsers-block"><span class="toc__num">07</span> Браузеры и DevTools</a>
+        <ol>
+          <li><a href="#browsers">Reset и отладка</a></li>
+        </ol>
+      </li>
+      <li><a href="#motion-block"><span class="toc__num">08</span> Анимации</a>
+        <ol>
+          <li><a href="#motion">Переходы и кадры</a></li>
+        </ol>
+      </li>
+      <li><a href="#summary">Итог</a></li>
+    </ol>
+  </nav>
+
+  <main class="deck" id="main" tabindex="-1">
+
+    <section class="slide slide--cover" id="cover" aria-labelledby="cover-title">
+      <div class="slide__inner cover">
+        <div class="cover__text">
+          <p class="kicker">Frontend · CSS</p>
+          <h1 id="cover-title">CSS без загадок</h1>
+          <p class="lead">От кода к результату: селекторы, каскад, раскладка, БЭМ и адаптивность. Браузер сам выбирает, какое правило победит.</p>
+          <p class="cover__actions">
+            <a class="btn btn--accent" href="#ideas">Смотреть, как это работает</a>
+            <button class="btn" type="button" data-action="css">Выключить CSS</button>
+          </p>
+          <p class="hint">Это живая страница, не скриншоты. Каждый пример — настоящий элемент и настоящее правило. Стрелки <kbd>←</kbd> <kbd>→</kbd>, <kbd>F</kbd> — на весь экран, <kbd>X</kbd> — инспектор, <kbd>C</kbd> — выключить CSS.</p>
+        </div>
+        <figure class="flow3">
+          <div class="flow3__step">
+            <p class="flow3__k">HTML — что есть</p>
+            <code>&lt;button class="btn"&gt;Нажми&lt;/button&gt;</code>
+          </div>
+          <div class="flow3__step">
+            <p class="flow3__k">CSS — как выглядит</p>
+            <code>.btn {
+  color: white;
+  background: #18786f;
+}</code>
+          </div>
+          <div class="flow3__step">
+            <p class="flow3__k">Результат</p>
+            <span class="flow3__btn">Нажми</span>
+          </div>
+          <figcaption class="visually-hidden">Три шага: разметка кнопки, правило CSS и бирюзовая кнопка с белым текстом</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" id="ideas" aria-labelledby="ideas-title">
+      <div class="slide__inner">
+        <p class="kicker">Прежде чем писать CSS</p>
+        <h2 id="ideas-title">Три идеи, из которых состоит любое правило</h2>
+        <p class="lead">HTML создаёт элемент. Селектор его находит. Свойство меняет оформление — а браузер решает, какое правило применить.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Элемент</b> Заголовок, абзац или кнопка существуют и без CSS. Выключите стили клавишей <kbd>C</kbd> — разметка останется.</li>
+            <li><b>Селектор</b> Запись <code>.btn</code> выбирает элементы с <code>class="btn"</code>. Решётка <code>#</code> выбирает <code>id</code>.</li>
+            <li><b>Свойство</b> Внутри <code>{ }</code> написано, что меняем: <code>color</code>, <code>padding</code>, <code>background</code>.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Одно и то же свойство — разный результат</h3>
+            <div class="seg" data-seg="ideas" role="group" aria-label="Какое свойство меняем">
+              <button type="button" value="color" aria-pressed="true">color</button>
+              <button type="button" value="padding" aria-pressed="false">padding</button>
+              <button type="button" value="background" aria-pressed="false">background</button>
+            </div>
+            <div class="lab__stage" id="ideas-stage" data-prop="color">
+              <button class="d-btn" type="button">Купить</button>
+            </div>
+            <p class="effect" id="ideas-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="ideas-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="block-0" aria-labelledby="basics-title">
+      <header class="slide slide--block" id="basics">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">00</p>
+          <p class="kicker">Блок 00 из 08</p>
+          <h2 id="basics-title">Основы CSS</h2>
+          <p class="lead">Как браузер находит элементы и выбирает, какое правило победит</p>
+          <ol class="block__topics">
+            <li><a href="#connect">Подключение</a></li>
+            <li><a href="#selectors">Селекторы</a></li>
+            <li><a href="#combinators">Комбинаторы</a></li>
+            <li><a href="#cascade">Каскад</a></li>
+            <li><a href="#specificity">Специфичность</a></li>
+            <li><a href="#inherit">Наследование</a></li>
+            <li><a href="#box">Блочная модель</a></li>
+            <li><a href="#spacing">Margin и padding</a></li>
+            <li><a href="#paint">Цвет и шрифт</a></li>
+            <li><a href="#units">px, em и rem</a></li>
+            <li><a href="#vars">Переменные</a></li>
+            <li><a href="#pseudo">Псевдоклассы</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="connect" aria-labelledby="connect-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Подключение</p>
+        <h2 id="connect-title">Три способа подключить CSS</h2>
+        <p class="lead">Один и тот же синий абзац можно получить тремя путями. Обслуживать их придётся по-разному.</p>
+        <div class="split">
+          <div class="trio">
+            <section class="card"><h3>Внешний файл</h3><p><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></p><p>Много страниц, кеш браузера. Основной способ в проектах.</p></section>
+            <section class="card"><h3><code>&lt;style&gt;</code> в HTML</h3><p>Не нужен отдельный файл. Удобно для одной страницы, трудно переиспользовать.</p></section>
+            <section class="card"><h3>Атрибут style</h3><p><code>style="color: blue"</code> — быстрая правка. Код повторяется, приоритет высокий.</p></section>
+          </div>
+          <section class="lab">
+            <h3 class="lab__title">Результат один, источник разный</h3>
+            <div class="seg" data-seg="connect" role="group" aria-label="Способ подключения">
+              <button type="button" value="file" aria-pressed="true">файл</button>
+              <button type="button" value="style" aria-pressed="false">&lt;style&gt;</button>
+              <button type="button" value="inline" aria-pressed="false">inline</button>
+            </div>
+            <div class="lab__stage" id="connect-stage"><p class="d-p">Пример текста</p></div>
+            <p class="effect" id="connect-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">Как это записано</span></figcaption><pre class="snippet" id="connect-code" data-lang="html"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="selectors" aria-labelledby="selectors-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Селекторы</p>
+        <h2 id="selectors-title">Тег, класс, id и атрибут</h2>
+        <p class="lead">Класс можно повесить на много элементов. <code>id</code> уникален и слишком силён, чтобы красить им вёрстку: его оставляют якорям и скриптам.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b><code>p</code></b> Любой абзац. Слабый селектор: его легко перебить.</li>
+            <li><b><code>.note</code> и <code>#menu</code></b> Класс — для повторяемого блока. Один <code>id</code> на страницу.</li>
+            <li><b><code>[type="text"]</code></b> Атрибут выбирает поле по его настройке, без лишнего класса.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Подсветите, кого выбрал селектор</h3>
+            <div class="seg seg--wrap" data-seg="sel" role="group" aria-label="Селектор">
+              <button type="button" value="all" aria-pressed="true">все правила</button>
+              <button type="button" value="p" aria-pressed="false">p</button>
+              <button type="button" value="class" aria-pressed="false">.note</button>
+              <button type="button" value="id" aria-pressed="false">#menu</button>
+              <button type="button" value="attr" aria-pressed="false">[type]</button>
+            </div>
+            <div class="lab__stage" id="sel-stage" data-pick="all">
+              <p>Текст</p>
+              <p class="note">Заметка</p>
+              <div id="menu">Меню</div>
+              <input type="text" value="поле" aria-label="Текстовое поле">
+            </div>
+            <p class="effect" id="sel-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="sel-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="combinators" aria-labelledby="combinators-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Комбинаторы</p>
+        <h2 id="combinators-title">Пробел, &gt;, точка и запятая</h2>
+        <p class="lead">Пробел достаёт абзац на любой глубине. <code>&gt;</code> — только прямого ребёнка. <code>.card.dark</code> — оба класса на одном элементе. Запятая — список селекторов.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Потомок и ребёнок</b> Вложенный абзац станет синим, но не жирным: жирным помечен только прямой <code>p</code>.</li>
+            <li><b>Два класса подряд</b> <code>.card.dark</code> — это не два элемента, а один с обоими классами.</li>
+            <li><b>Запятая</b> <code>.card, p { margin: 0 }</code> отдаёт правило и карточке, и абзацам.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Включайте правила по одному</h3>
+            <div class="toggles" id="combo-toggles" role="group" aria-label="Какие правила включены">
+              <button type="button" value="desc" aria-pressed="true">.card p</button>
+              <button type="button" value="child" aria-pressed="true">.card &gt; p</button>
+              <button type="button" value="both" aria-pressed="true">.card.dark</button>
+              <button type="button" value="list" aria-pressed="false">.card, p</button>
+            </div>
+            <div class="lab__stage is-desc is-child is-both" id="combo-stage">
+              <div class="d-card dark">
+                <p>Первый абзац</p>
+                <section><p>Вложенный</p></section>
+              </div>
+            </div>
+            <p class="effect" id="combo-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="combo-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="cascade" aria-labelledby="cascade-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Каскад</p>
+        <h2 id="cascade-title">Кто побеждает, если правил несколько</h2>
+        <p class="lead">Сначала сравнивают специфичность. Если она равна, побеждает правило, которое ниже в коде — и файл, подключённый позже.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Тег слабее класса</b> <code>p</code> — это 0–0–1. <code>.note</code> — 0–1–0. Класс важнее.</li>
+            <li><b>Равная сила — ниже по файлу</b> Два <code>.note</code> спорят порядком, а не «силой имени».</li>
+            <li><b><code>!important</code> — не балл</b> Такие объявления сравниваются отдельно. Ими каскад ломают, а не чинят.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Один абзац, три уровня силы</h3>
+            <div class="seg" data-seg="cas" role="group" aria-label="Какие правила участвуют">
+              <button type="button" value="tag" aria-pressed="false">только p</button>
+              <button type="button" value="class" aria-pressed="false">+ .note</button>
+              <button type="button" value="later" aria-pressed="true">два .note</button>
+            </div>
+            <div class="lab__stage" id="cas-stage" data-mode="later">
+              <ul class="scores" id="cas-scores"></ul>
+              <p class="note">Сообщение</p>
+            </div>
+            <p class="effect" id="cas-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="cas-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="specificity" aria-labelledby="specificity-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Специфичность</p>
+        <h2 id="specificity-title">Тег, класс, id, атрибут style</h2>
+        <p class="lead">Для обычных авторских стилей: тег &lt; класс &lt; id &lt; inline. <code>!important</code> перебивает их все и сам перебивается только другим <code>!important</code>.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Считают тройкой</b> id, потом классы и атрибуты, потом теги. <code>#warning</code> — это 1–0–0.</li>
+            <li><b>Inline сильнее селектора</b> <code>style="color: purple"</code> побеждает id, пока нет <code>!important</code>.</li>
+            <li><b>Не копите силу</b> Длинные цепочки и <code>!important</code> делают следующее правило всё дороже.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Добавляйте более сильное правило</h3>
+            <div class="seg seg--wrap" data-seg="spec" role="group" aria-label="Сильнейшее обычное правило">
+              <button type="button" value="tag" aria-pressed="false">p</button>
+              <button type="button" value="class" aria-pressed="false">.note</button>
+              <button type="button" value="id" aria-pressed="true">#warning</button>
+              <button type="button" value="inline" aria-pressed="false">style=""</button>
+            </div>
+            <div class="toggles" id="spec-toggles">
+              <button type="button" value="imp" aria-pressed="false">!important у .note</button>
+            </div>
+            <div class="lab__stage" id="spec-stage">
+              <ul class="scores" id="spec-scores"></ul>
+              <p>Важно</p>
+            </div>
+            <p class="effect" id="spec-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="spec-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="inherit" aria-labelledby="inherit-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Наследование</p>
+        <h2 id="inherit-title">Что дети получают от родителя</h2>
+        <p class="lead"><code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code> и <code>text-align</code> переходят вниз. <code>margin</code>, <code>padding</code>, <code>border</code>, <code>background</code> и <code>width</code> — нет.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Текст красит себя сам</b> Цвет абзаца синий, хотя правило написано на карточке. Это наследование, не селектор.</li>
+            <li><b><code>inherit</code> и <code>initial</code></b> Первое явно берёт значение родителя. Второе возвращает начальное — и синий пропадает.</li>
+            <li><b>Рамка ребёнка своя</b> Оранжевая рамка не получила padding родителя: отступ остался только у карточки.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Оборвите наследование цвета</h3>
+            <div class="seg" data-seg="inh" role="group" aria-label="Как задан цвет абзаца">
+              <button type="button" value="auto" aria-pressed="true">само</button>
+              <button type="button" value="inherit" aria-pressed="false">inherit</button>
+              <button type="button" value="initial" aria-pressed="false">initial</button>
+            </div>
+            <div class="lab__stage" id="inh-stage" data-mode="auto">
+              <div class="d-article">
+                <p>Текст статьи</p>
+                <span class="d-kid">padding родителя сюда не пришёл</span>
+              </div>
+            </div>
+            <p class="effect" id="inh-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="inh-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="box" aria-labelledby="box-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Блочная модель</p>
+        <h2 id="box-title">Из чего складывается ширина</h2>
+        <p class="lead">Снаружи внутрь: margin, border, padding, content. При <code>content-box</code> ширина — это только текст. При <code>border-box</code> в неё уже входят padding и border.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>content-box</b> 200 + 20×2 + 5×2 = 250px. Отступы добавляются сверху и ломают сетку.</li>
+            <li><b>border-box</b> Элемент остаётся 200px. На текст остаётся 200 − 40 − 10 = 150px.</li>
+            <li><b>Оранжевое поле</b> Это margin: фон элемента на него не заходит. Синее — padding, белое — контент.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Посчитайте живой блок</h3>
+            <div class="seg" data-seg="box" role="group" aria-label="box-sizing">
+              <button type="button" value="content" aria-pressed="true">content-box</button>
+              <button type="button" value="border" aria-pressed="false">border-box</button>
+            </div>
+            <div class="lab__stage" id="box-stage" data-box="content">
+              <div class="d-margin"><div id="box-el"><span>Текст</span></div></div>
+              <p class="d-readout" id="box-out"></p>
+            </div>
+            <p class="effect" id="box-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="box-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="spacing" aria-labelledby="spacing-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Отступы</p>
+        <h2 id="spacing-title">Padding внутри, margin снаружи</h2>
+        <p class="lead">Фон закрашивает padding и останавливается на рамке. Вертикальные margin соседей схлопываются: остаётся больший, а не сумма.</p>
+        <div class="split">
+          <section class="lab">
+            <h3 class="lab__title">Зазор между блоками — не 40px</h3>
+            <div class="lab__stage" id="space-stage">
+              <div class="d-pair">
+                <div id="col-a"><span>margin-bottom: 30px</span></div>
+                <div id="col-b"><span>margin-top: 10px</span></div>
+              </div>
+              <p class="d-readout" id="space-out"></p>
+            </div>
+            <p class="effect" id="space-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="space-code"></pre></figure>
+          </section>
+          <section class="card">
+            <h3>Проверьте себя</h3>
+            <p><code>width: 200px</code>, <code>padding: 20px</code>, <code>border: 5px</code>, <code>box-sizing: content-box</code>. Сколько займёт блок по горизонтали?</p>
+            <div class="quiz" id="quiz-box" data-answer="250">
+              <button class="btn btn--small" type="button" data-value="200">A · 200px</button>
+              <button class="btn btn--small" type="button" data-value="240">B · 240px</button>
+              <button class="btn btn--small" type="button" data-value="250">C · 250px</button>
+            </div>
+            <p class="effect" id="quiz-box-out" hidden></p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="paint" aria-labelledby="paint-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Цвет и текст</p>
+        <h2 id="paint-title">Цвет текста, фон и шрифт</h2>
+        <p class="lead"><code>opacity</code> делает прозрачным весь элемент вместе с детьми. Альфа в <code>rgb()</code> — только этот цвет. Список шрифтов — это запас: если первого нет, берётся следующий.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Форматы</b> Имя (<code>red</code>), hex (<code>#254e8d</code>), <code>rgb()</code> и <code>hsl()</code>. Альфа — от 0 до 1.</li>
+            <li><b>Белая плашка</b> При прозрачном фоне она остаётся белой. При <code>opacity</code> тускнеет вместе с родителем.</li>
+            <li><b>Запасной шрифт</b> <code>Arial, sans-serif</code>. В конце — семейство. Чужой файл подключают через <code>@font-face</code> или ссылку.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Сравните альфу и opacity</h3>
+            <div class="seg" data-seg="paint" role="group" aria-label="Прозрачность">
+              <button type="button" value="solid" aria-pressed="true">цвет</button>
+              <button type="button" value="alpha" aria-pressed="false">альфа фона</button>
+              <button type="button" value="opacity" aria-pressed="false">opacity</button>
+            </div>
+            <div class="seg" data-seg="font" role="group" aria-label="Шрифт">
+              <button type="button" value="sans" aria-pressed="true">Arial</button>
+              <button type="button" value="serif" aria-pressed="false">Georgia</button>
+              <button type="button" value="stack" aria-pressed="false">нет такого шрифта</button>
+            </div>
+            <div class="lab__stage" id="color-stage" data-mode="solid" data-font="sans">
+              <p class="d-notice">Внимание! <span class="d-chip">дочерний текст</span></p>
+            </div>
+            <p class="effect" id="paint-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="paint-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="units" aria-labelledby="units-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Единицы</p>
+        <h2 id="units-title">px, % , em и rem</h2>
+        <p class="lead"><code>em</code> считается от шрифта текущего элемента и накапливается во вложенности. <code>rem</code> — от корня <code>html</code>. Поэтому масштаб страницы меняют в одном месте.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>px</b> Абсолютные пиксели. 24px останутся 24px, как бы ни вырос родитель.</li>
+            <li><b>em</b> 1.5em при родителе 32px — это 48px. Во внуке база уже новая.</li>
+            <li><b>rem</b> 1.5rem при корне 16px — это 24px. Родитель на него не влияет.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Меняйте шрифт родителя</h3>
+            <div class="seg" data-seg="units" role="group" aria-label="Размер шрифта родителя">
+              <button type="button" value="16" aria-pressed="true">родитель 16px</button>
+              <button type="button" value="32" aria-pressed="false">32px</button>
+              <button type="button" value="48" aria-pressed="false">48px</button>
+            </div>
+            <div class="lab__stage" id="unit-stage" data-size="16">
+              <div id="unit-parent">
+                <p id="unit-em">1.5em</p>
+                <p id="unit-rem">1.5rem</p>
+                <p id="unit-px">24px</p>
+              </div>
+              <p class="d-readout" id="unit-out"></p>
+            </div>
+            <p class="effect" id="unit-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="unit-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="vars" aria-labelledby="vars-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Переменные</p>
+        <h2 id="vars-title">Одно имя — много мест</h2>
+        <p class="lead"><code>--brand</code> на <code>:root</code> видна всей странице. Объявление внутри блока заменяет её для детей. <code>var(--text, #333)</code> — если имени нет, берётся запас.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Это не SCSS</b> Переменные <code>$</code> исчезают при сборке. CSS-переменные живут в браузере: их видно в DevTools и можно сменить из JS.</li>
+            <li><b>Наследование</b> Тёмной карточке достаточно переопределить <code>--brand</code>, кнопки трогать не нужно.</li>
+            <li><b>Запасное значение</b> Второй аргумент <code>var()</code> срабатывает, только если переменная не задана.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Перекрасьте тему и включите --text</h3>
+            <div class="seg" data-seg="var-theme" role="group" aria-label="Тема карточки">
+              <button type="button" value="light" aria-pressed="true">светлая</button>
+              <button type="button" value="dark" aria-pressed="false">тёмная</button>
+            </div>
+            <div class="seg" data-seg="var-text" role="group" aria-label="Переменная --text">
+              <button type="button" value="off" aria-pressed="true">--text нет</button>
+              <button type="button" value="on" aria-pressed="false">--text задана</button>
+            </div>
+            <div class="lab__stage" id="var-stage" data-theme="light" data-text="off">
+              <div class="d-panel">
+                <button class="d-btn" type="button">Отправить</button>
+                <p class="d-title">Заголовок</p>
+              </div>
+            </div>
+            <p class="effect" id="var-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="var-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="pseudo" aria-labelledby="pseudo-title">
+      <div class="slide__inner">
+        <p class="kicker">Основы CSS · Псевдоклассы</p>
+        <h2 id="pseudo-title">Состояние и кусок, которого нет в HTML</h2>
+        <p class="lead">Псевдокласс описывает состояние: <code>:hover</code>, <code>:focus-visible</code>, <code>:disabled</code>, <code>:nth-child</code>. Псевдоэлемент создаёт часть элемента: <code>::before</code>. Без <code>content</code> он не появится.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Клавиатуре нет :hover</b> Без <code>:focus-visible</code> человек на Tab не видит, где он. Наведение есть не на всех устройствах.</li>
+            <li><b>Два двоеточия</b> Так отличают псевдоэлемент от псевдокласса. <code>::before</code> по умолчанию строчный.</li>
+            <li><b><code>:nth-child(2n)</code></b> Каждый чётный ребёнок. Удобно для полосатого списка, без классов в разметке.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Наведите, сфокусируйте, включите звезду</h3>
+            <div class="toggles" id="pseudo-toggles" role="group" aria-label="Псевдоклассы и псевдоэлементы">
+              <button type="button" value="hover" aria-pressed="true">:hover</button>
+              <button type="button" value="focus" aria-pressed="true">:focus-visible</button>
+              <button type="button" value="before" aria-pressed="true">::before</button>
+              <button type="button" value="disabled" aria-pressed="true">:disabled</button>
+              <button type="button" value="nth" aria-pressed="true">:nth-child</button>
+            </div>
+            <div class="lab__stage is-hover is-focus is-before is-disabled is-nth" id="pseudo-stage">
+              <button class="d-btn" type="button">Открыть</button>
+              <button class="d-btn" type="button" disabled>Нельзя</button>
+              <ul>
+                <li>один</li>
+                <li>два</li>
+                <li>три</li>
+                <li>четыре</li>
+              </ul>
+            </div>
+            <p class="effect" id="pseudo-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="pseudo-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-1" aria-labelledby="pos-block-title">
+      <header class="slide slide--block" id="pos-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">01</p>
+          <p class="kicker">Блок 01 из 08</p>
+          <h2 id="pos-block-title">Позиционирование</h2>
+          <p class="lead">Где элемент стоит в потоке и какой слой оказывается сверху</p>
+          <ol class="block__topics">
+            <li><a href="#position">Поток, relative, absolute</a></li>
+            <li><a href="#layers">sticky и z-index</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="position" aria-labelledby="position-title">
+      <div class="slide__inner">
+        <p class="kicker">Позиционирование</p>
+        <h2 id="position-title">Поток, сдвиг и выход из потока</h2>
+        <p class="lead"><code>relative</code> сдвигает элемент, но место в потоке остаётся. <code>absolute</code> ищёт предка с <code>position</code> не <code>static</code>. <code>fixed</code> держится окна — здесь окно заменяет тёмная панель.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>static</b> Обычный порядок. <code>top</code> и <code>left</code> ничего не делают.</li>
+            <li><b>relative</b> Визуальный сдвиг. Соседи не подъезжают. Часто нужен как точка отсчёта для бейджа.</li>
+            <li><b>absolute / fixed</b> Место не занимают. Бейдж: родителю <code>relative</code>, ему <code>top</code> и <code>right</code>.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Прокрутите пример во всех режимах</h3>
+            <div class="seg seg--wrap" data-seg="pos" role="group" aria-label="position">
+              <button type="button" value="flow" aria-pressed="true">static</button>
+              <button type="button" value="rel" aria-pressed="false">relative</button>
+              <button type="button" value="abs" aria-pressed="false">absolute</button>
+              <button type="button" value="fixed" aria-pressed="false">как fixed</button>
+            </div>
+            <div class="lab__stage" id="pos-stage" data-pos="flow">
+              <div class="d-screen">
+                <div class="d-view">
+                  <p class="d-block">Первый блок</p>
+                  <p class="d-block d-b">Второй <span class="d-badge">−20%</span></p>
+                  <p class="d-block">Третий</p>
+                  <p class="d-block">Четвёртый — прокрутите</p>
+                  <p class="d-block">Пятый остаётся в потоке</p>
+                </div>
+                <div class="d-bar">Панель привязана к этому окну, не к тексту</div>
+              </div>
+            </div>
+            <p class="effect" id="pos-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="pos-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="layers" aria-labelledby="layers-title">
+      <div class="slide__inner">
+        <p class="kicker">Позиционирование · Слои</p>
+        <h2 id="layers-title">Почему sticky молчит, а z-index: 9999 бессилен</h2>
+        <p class="lead"><code>sticky</code> требует порог вроде <code>top: 0</code> и прокрутку внутри родителя. <code>z-index</code> сравнивает контексты: потомок не вылезет из родителя с собственным слоем.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Нет top — нет залипания</b> Без смещения элемент просто стоит в потоке.</li>
+            <li><b>Контекст наложения</b> <code>transform</code>, <code>opacity</code> меньше 1 и <code>z-index</code> у родителя запирают детей внутри.</li>
+            <li><b>Сначала родители</b> Шапка с <code>z-index: 2</code> выше карточки с <code>z-index: 1</code>, даже если внутри карточки написано 9999.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Сломайте sticky и заприте попап</h3>
+            <div class="toggles" id="layer-toggles">
+              <button type="button" value="sticky" aria-pressed="true">top: 0</button>
+              <button type="button" value="trap" aria-pressed="false">контекст у карточки</button>
+            </div>
+            <div class="lab__stage" id="layer-stage">
+              <div id="stick-view" data-sticky="on">
+                <div class="d-nav">Меню</div>
+                <p>Прокрутите: с top: 0 меню остаётся у края.</p>
+                <p>Дальше идёт основной текст, и меню не уезжает.</p>
+                <p>Без top липкое поведение не включается.</p>
+                <p>overflow: hidden у предка тоже ломает sticky.</p>
+              </div>
+              <div class="z-demo">
+                <div class="z-head">шапка · z-index: 2</div>
+                <div class="z-card">
+                  <div class="z-popup">popup · 9999</div>
+                  карточка
+                </div>
+              </div>
+            </div>
+            <p class="effect" id="layer-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="layer-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-2" aria-labelledby="flex-block-title">
+      <header class="slide slide--block" id="flex-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">02</p>
+          <p class="kicker">Блок 02 из 08</p>
+          <h2 id="flex-block-title">Flexbox</h2>
+          <p class="lead">Строка или колонка, выравнивание и свободное место</p>
+          <ol class="block__topics">
+            <li><a href="#flex">Оси и выравнивание</a></li>
+            <li><a href="#grow">Перенос и flex: 1</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="flex" aria-labelledby="flex-title">
+      <div class="slide__inner">
+        <p class="kicker">Flexbox</p>
+        <h2 id="flex-title">Сначала родитель, потом оси</h2>
+        <p class="lead"><code>display: flex</code> раскладывает только непосредственных детей. <code>justify-content</code> — вдоль главной оси, <code>align-items</code> — поперёк. Ось задаёт <code>flex-direction</code>.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>row и column</b> По умолчанию строка. В колонке «горизонтальное» выравнивание меняется местами с «вертикальным».</li>
+            <li><b>Шапка</b> <code>space-between</code> разводит логотип и меню по краям, <code>center</code> выравнивает их по поперечной оси.</li>
+            <li><b>Только дети</b> Внуки флекс-контейнера сами в ряд не встанут.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Соберите шапку</h3>
+            <div class="seg" data-seg="flex-dir" role="group" aria-label="flex-direction">
+              <button type="button" value="row" aria-pressed="true">row</button>
+              <button type="button" value="column" aria-pressed="false">column</button>
+            </div>
+            <div class="seg seg--wrap" data-seg="flex-just" role="group" aria-label="justify-content">
+              <button type="button" value="flex-start" aria-pressed="false">start</button>
+              <button type="button" value="center" aria-pressed="false">center</button>
+              <button type="button" value="flex-end" aria-pressed="false">end</button>
+              <button type="button" value="space-between" aria-pressed="true">space-between</button>
+            </div>
+            <div class="seg" data-seg="flex-align" role="group" aria-label="align-items">
+              <button type="button" value="stretch" aria-pressed="false">stretch</button>
+              <button type="button" value="center" aria-pressed="true">center</button>
+              <button type="button" value="flex-end" aria-pressed="false">end</button>
+            </div>
+            <div class="lab__stage" id="flex-stage" data-dir="row" data-just="space-between" data-align="center">
+              <header class="d-header"><b>Лого</b><nav>Меню</nav></header>
+            </div>
+            <p class="effect" id="flex-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="flex-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="grow" aria-labelledby="grow-title">
+      <div class="slide__inner">
+        <p class="kicker">Flexbox · Размеры</p>
+        <h2 id="grow-title">Перенос, gap и flex: 1</h2>
+        <p class="lead"><code>flex-wrap: wrap</code> переносит не влезшие элементы. <code>gap</code> задаёт расстояние без трюков с margin. <code>flex: 1</code> делит свободное место поровну.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>nowrap сжимает</b> Без переноса элементы худеют, пока не упрутся в <code>min-width</code>.</li>
+            <li><b>wrap</b> На узкой ширине четвёртый блок уходит на следующую строку.</li>
+            <li><b>flex: 1</b> Это <code>flex-grow: 1</code>, <code>flex-shrink: 1</code> и <code>flex-basis: 0</code>. Доли равные.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Сузьте ряд и включите рост</h3>
+            <div class="toggles" id="grow-toggles">
+              <button type="button" value="wrap" aria-pressed="false">flex-wrap: wrap</button>
+              <button type="button" value="grow" aria-pressed="false">flex: 1</button>
+              <button type="button" value="narrow" aria-pressed="true">узкий контейнер</button>
+            </div>
+            <div class="lab__stage" id="grow-stage" data-wrap="nowrap" data-grow="0" data-narrow="1">
+              <div class="d-row"><div>1</div><div>2</div><div>3</div><div>4</div></div>
+            </div>
+            <p class="effect" id="grow-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="grow-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-3" aria-labelledby="grid-block-title">
+      <header class="slide slide--block" id="grid-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">03</p>
+          <p class="kicker">Блок 03 из 08</p>
+          <h2 id="grid-block-title">CSS Grid</h2>
+          <p class="lead">Колонки, доли свободного места и каркас страницы</p>
+          <ol class="block__topics">
+            <li><a href="#grid">Колонки и minmax</a></li>
+            <li><a href="#areas">Области страницы</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="grid" aria-labelledby="grid-title">
+      <div class="slide__inner">
+        <p class="kicker">CSS Grid</p>
+        <h2 id="grid-title">Доли fr и колонки без медиазапросов</h2>
+        <p class="lead"><code>1fr</code> — доля свободного места уже после <code>gap</code>. Три раза по 33% плюс зазор вылезают из контейнера, три <code>1fr</code> — нет. <code>auto-fit</code> с <code>minmax</code> сам решает, сколько колонок влезло.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>repeat(3, 1fr)</b> Три равные колонки. Зазор не добавляется сверх контейнера.</li>
+            <li><b>auto-fit + minmax</b> Колонка не уже порога, лишнее место забирает <code>1fr</code>. Узко — перенос на новую строку.</li>
+            <li><b>Порог в примере — 140px</b> На широкой странице ставят 250px. Механика та же, иначе колонка не влезла бы в панель.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Сузьте сетку</h3>
+            <div class="seg" data-seg="grid" role="group" aria-label="Шаблон колонок">
+              <button type="button" value="3" aria-pressed="true">3 × 1fr</button>
+              <button type="button" value="auto" aria-pressed="false">auto-fit</button>
+            </div>
+            <div class="toggles" id="grid-toggles">
+              <button type="button" value="narrow" aria-pressed="false">узкий контейнер</button>
+            </div>
+            <div class="lab__stage" id="grid-stage" data-mode="3">
+              <div class="d-grid"><div>1</div><div>2</div><div>3</div><div>4</div></div>
+            </div>
+            <p class="effect" id="grid-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="grid-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="areas" aria-labelledby="areas-title">
+      <div class="slide__inner">
+        <p class="kicker">CSS Grid · Каркас</p>
+        <h2 id="areas-title">Имена областей вместо номеров линий</h2>
+        <p class="lead">Строка в <code>grid-template-areas</code> — это ряд колонок. Grid держит две оси сразу, Flexbox — одну: шапка, ряд кнопок, лента тегов.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Схема на родителе</b> <code>"head head" "main side"</code> сразу показывает каркас.</li>
+            <li><b>Имя на ребёнке</b> <code>grid-area: main</code> сажает элемент в клетку, даже если в HTML он не первый.</li>
+            <li><b>Линии тоже работают</b> <code>grid-column: 1 / 3</code> — от первой линии до третьей, то есть на две клетки.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Mobile-колонка и каркас desktop</h3>
+            <div class="seg" data-seg="areas" role="group" aria-label="Раскладка">
+              <button type="button" value="mobile" aria-pressed="true">колонка</button>
+              <button type="button" value="desk" aria-pressed="false">шапка + две колонки</button>
+            </div>
+            <div class="lab__stage" id="area-stage" data-mode="mobile">
+              <div class="d-layout">
+                <header>Шапка</header>
+                <main>Контент</main>
+                <aside>Меню</aside>
+              </div>
+            </div>
+            <p class="effect" id="area-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="area-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-4" aria-labelledby="bem-block-title">
+      <header class="slide slide--block" id="bem-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">04</p>
+          <p class="kicker">Блок 04 из 08</p>
+          <h2 id="bem-block-title">БЭМ</h2>
+          <p class="lead">Имена классов, по которым видна роль, а не место в дереве</p>
+          <ol class="block__topics">
+            <li><a href="#bem">Блок, элемент, модификатор</a></li>
+            <li><a href="#flat">Имена и зависимость от HTML</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="bem" aria-labelledby="bem-title">
+      <div class="slide__inner">
+        <p class="kicker">БЭМ</p>
+        <h2 id="bem-title">Имена, по которым видна роль</h2>
+        <p class="lead">Блок — самостоятельный кусок (<code>.card</code>). Элемент — его часть (<code>.card__title</code>). Модификатор — вариант (<code>.card--sale</code>), его добавляют вместе с базовым классом.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Элемент не живёт один</b> <code>card__title</code> не имеет смысла вне карточки, но в имени нет вложенности DOM.</li>
+            <li><b>Модификатор не заменяет блок</b> Пишут <code>class="card card--sale"</code>, а не только <code>card--sale</code>.</li>
+            <li><b>Цепочка тегов хрупкая</b> <code>article h2</code> сломается, если заголовок переедет. Класс роли — нет.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Вынесите заголовок из карточки</h3>
+            <div class="seg" data-seg="bem" role="group" aria-label="Как покрашен заголовок">
+              <button type="button" value="bem" aria-pressed="true">.card__title</button>
+              <button type="button" value="chain" aria-pressed="false">article h2</button>
+            </div>
+            <div class="lab__stage" id="bem-stage" data-css="bem">
+              <div id="bem-wrap">
+                <article class="card card--sale" id="bem-card">
+                  <h3 class="card__title" id="bem-label">Товар</h3>
+                  <button class="card__button" type="button">Купить</button>
+                </article>
+              </div>
+              <button class="btn btn--small" type="button" id="bem-move">Вынести заголовок</button>
+            </div>
+            <p class="effect" id="bem-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="bem-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="flat" aria-labelledby="flat-title">
+      <div class="slide__inner">
+        <p class="kicker">БЭМ · Имена</p>
+        <h2 id="flat-title">Не вкладывайте элементы в элементы</h2>
+        <p class="lead"><code>card__body__title</code> врёт, что элемент принадлежит элементу. Как бы глубоко ни лежал заголовок, в имени только блок: <code>card__title</code>. Если кусок зажил своей жизнью — это новый блок.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Форма имени</b> <code>block__element--modifier</code>. Слова внутри — через дефис: <code>product-card__title</code>.</li>
+            <li><b>БЭМ не гарантирует независимость</b> Он привязывает стиль к роли, а не к цепочке тегов. Переиспользование зависит от устройства компонента.</li>
+            <li><b>Плоский список классов</b> Глубокие селекторы подгоняют специфичность и мешают следующей правке.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Модификатор включается поверх блока</h3>
+            <div class="seg" data-seg="flat" role="group" aria-label="Модификатор скидки">
+              <button type="button" value="plain" aria-pressed="false">.card</button>
+              <button type="button" value="sale" aria-pressed="true">.card.card--sale</button>
+            </div>
+            <div class="lab__stage" id="flat-stage">
+              <article class="card card--sale" id="flat-card">
+                <h3 class="card__title">Товар</h3>
+                <p>Рамка скидки сидит на модификаторе, не вместо блока.</p>
+              </article>
+              <p id="flat-bad">Плохое имя: <s>.card__body__title</s> — элемент не вкладывают в элемент.</p>
+            </div>
+            <p class="effect" id="flat-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="flat-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-5" aria-labelledby="scss-block-title">
+      <header class="slide slide--block" id="scss-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">05</p>
+          <p class="kicker">Блок 05 из 08</p>
+          <h2 id="scss-block-title">SCSS</h2>
+          <p class="lead">Удобная запись до сборки. В браузер уходит обычный CSS</p>
+          <ol class="block__topics">
+            <li><a href="#scss">Вложенность и миксины</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="scss" aria-labelledby="scss-title">
+      <div class="slide__inner">
+        <p class="kicker">SCSS</p>
+        <h2 id="scss-title">Браузер получает только CSS</h2>
+        <p class="lead">SCSS добавляет переменные <code>$</code>, вложенность, миксины и партиалы. Сборщик превращает это в обычные правила. В DevTools исходного <code>$brand</code> уже нет.</p>
+        <div class="split">
+          <div class="stack">
+            <ol class="points">
+              <li><b><code>&</code> — текущий селектор</b> <code>&__title</code> станет <code>.card__title</code>, <code>&:hover</code> — <code>.card:hover</code>.</li>
+              <li><b>Глубже двух уровней не стоит</b> Вложенность собирает длинную цепочку, поднимает специфичность и ломает плоский БЭМ.</li>
+              <li><b>Миксин и партиал</b> Миксин — набор свойств с параметрами. Файл <code>_mixins.scss</code> подключают через <code>@use</code>, сам он в CSS не компилируется.</li>
+            </ol>
+            <div class="lab__stage" id="scss-stage" data-mode="var">
+              <button class="d-btn" type="button">Кнопка</button>
+              <article class="card"><h3 class="card__title">Текст</h3></article>
+            </div>
+          </div>
+          <section class="lab">
+            <h3 class="lab__title">Один приём — две записи</h3>
+            <div class="seg" data-seg="scss" role="group" aria-label="Приём SCSS">
+              <button type="button" value="var" aria-pressed="true">$ и &amp;:hover</button>
+              <button type="button" value="nest" aria-pressed="false">&amp;__title</button>
+              <button type="button" value="mixin" aria-pressed="false">@mixin</button>
+            </div>
+            <p class="effect" id="scss-effect"></p>
+            <div class="duo">
+              <figure class="code"><figcaption><span class="code__live">До сборки</span></figcaption><pre class="snippet" id="scss-src"></pre></figure>
+              <figure class="code"><figcaption><span class="code__live">После сборки</span></figcaption><pre class="snippet" id="scss-out"></pre></figure>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-6" aria-labelledby="adapt-block-title">
+      <header class="slide slide--block" id="adapt-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">06</p>
+          <p class="kicker">Блок 06 из 08</p>
+          <h2 id="adapt-block-title">Адаптивность</h2>
+          <p class="lead">Сначала узкий экран, потом шире — без потери удобства</p>
+          <ol class="block__topics">
+            <li><a href="#adapt">Viewport и колонки</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="adapt" aria-labelledby="adapt-title">
+      <div class="slide__inner">
+        <p class="kicker">Адаптивность</p>
+        <h2 id="adapt-title">Сначала узкий экран, потом шире</h2>
+        <p class="lead">Mobile-first: базовые стили для узкой ширины, дальше <code>min-width</code>. Пороги выбирают по контенту, не по названию телефона. Без <code>&lt;meta name="viewport"&gt;</code> мобильный браузер уменьшает всю страницу как десктоп.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Viewport</b> <code>width=device-width, initial-scale=1</code> сообщает настоящую ширину. Иначе брейкпоинты срабатывают не там.</li>
+            <li><b>768 и 1024 — условные</b> Здесь рамка уже: две колонки с 460px, три — с 700px. На сайте пороги шире, правило то же.</li>
+            <li><b>Картинка</b> <code>max-width: 100%</code> и <code>height: auto</code> не дают ей вылезти и сохраняют пропорции.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Потяните ширину рамки</h3>
+            <label class="src" for="adapt-range">Ширина рамки, как ширина viewport</label>
+            <input class="d-range" id="adapt-range" type="range" min="260" max="860" value="280">
+            <div class="lab__stage" id="adapt-stage">
+              <div class="d-frame" id="adapt-frame" data-bp="mobile">
+                <div class="d-cards"><div>1</div><div>2</div><div>3</div></div>
+                <img src="img/photo.svg" width="640" height="360" alt="Пейзаж: небо, солнце и два слоя холмов">
+              </div>
+              <p class="d-readout" id="adapt-out"></p>
+            </div>
+            <p class="effect" id="adapt-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">Так это пишут на странице</span></figcaption><pre class="snippet" id="adapt-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-7" aria-labelledby="browsers-block-title">
+      <header class="slide slide--block" id="browsers-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">07</p>
+          <p class="kicker">Блок 07 из 08</p>
+          <h2 id="browsers-block-title">Браузеры и DevTools</h2>
+          <p class="lead">Почему одинаковый код выглядит по-разному и где это увидеть</p>
+          <ol class="block__topics">
+            <li><a href="#browsers">Reset и отладка</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="browsers" aria-labelledby="browsers-title">
+      <div class="slide__inner">
+        <p class="kicker">Кроссбраузерность</p>
+        <h2 id="browsers-title">Почему одинаковый HTML выглядит иначе</h2>
+        <p class="lead">У браузеров разные отступы по умолчанию. Reset их обнуляет, normalize приводит к одному предсказуемому виду. Поддержка свойств проверяется заранее: запасное правило, потом современное, либо <code>@supports</code>.</p>
+        <div class="split">
+          <section class="lab">
+            <h3 class="lab__title">Слева стили браузера, справа обнуление</h3>
+            <iframe class="d-iframe" id="reset-frame" title="Сравнение отступов по умолчанию и после обнуления"></iframe>
+            <p class="effect" id="support-out"></p>
+            <figure class="code"><figcaption><span class="code__live">Запас и проверка</span></figcaption><pre class="snippet" id="reset-code"></pre></figure>
+          </section>
+          <section class="lab">
+            <h3 class="lab__title">Какое правило перечёркнуто</h3>
+            <div class="seg" data-seg="dev" role="group" aria-label="Какое правило победило">
+              <button type="button" value="fixed" aria-pressed="true">width: 300px</button>
+              <button type="button" value="full" aria-pressed="false">.wide ниже</button>
+            </div>
+            <div class="lab__stage" id="dev-stage" data-win="fixed">
+              <div class="devrules" id="dev-rules"></div>
+              <div class="d-card">Карточка</div>
+              <p class="d-readout" id="dev-out"></p>
+            </div>
+            <p class="effect" id="dev-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="dev-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="block" id="block-8" aria-labelledby="motion-block-title">
+      <header class="slide slide--block" id="motion-block">
+        <div class="slide__inner">
+          <p class="block__num" aria-hidden="true">08</p>
+          <p class="kicker">Блок 08 из 08</p>
+          <h2 id="motion-block-title">Анимации</h2>
+          <p class="lead">Плавная смена состояния, сдвиг без пересчёта вёрстки и кадры</p>
+          <ol class="block__topics">
+            <li><a href="#motion">Переходы и кадры</a></li>
+          </ol>
+        </div>
+      </header>
+
+    <section class="slide" id="motion" aria-labelledby="motion-title">
+      <div class="slide__inner">
+        <p class="kicker">Анимации</p>
+        <h2 id="motion-title">Переход, сдвиг и кадры</h2>
+        <p class="lead"><code>transition</code> сглаживает смену состояния. <code>transform</code> и <code>opacity</code> не пересчитывают раскладку, поэтому движение ровнее, чем у <code>width</code>. <code>@keyframes</code> работает без наведения и умеет повторяться.</p>
+        <div class="split">
+          <ol class="points">
+            <li><b>Не анимируйте all</b> Назовите свойство: <code>transition: background .3s ease</code>. Нужна смена состояния — hover, focus или класс.</li>
+            <li><b>translate не толкает соседей</b> Место в потоке остаётся. Кнопка может чуть вырасти через <code>scale</code> и никого не сдвинуть.</li>
+            <li><b>Ключевые кадры</b> Имя, длительность, и при необходимости <code>infinite</code>. Промежуточные шаги пишут в процентах.</li>
+          </ol>
+          <section class="lab">
+            <h3 class="lab__title">Наведите на кнопку и квадрат</h3>
+            <div class="seg" data-seg="motion" role="group" aria-label="Какой фрагмент CSS показать">
+              <button type="button" value="transition" aria-pressed="true">transition</button>
+              <button type="button" value="transform" aria-pressed="false">transform</button>
+              <button type="button" value="keys" aria-pressed="false">@keyframes</button>
+            </div>
+            <div class="toggles" id="motion-toggles">
+              <button type="button" value="tr" aria-pressed="true">плавный фон</button>
+              <button type="button" value="tf" aria-pressed="true">плавный сдвиг</button>
+              <button type="button" value="stop" aria-pressed="false">остановить кадры</button>
+            </div>
+            <div class="lab__stage is-tr is-tf" id="motion-stage">
+              <button class="d-btn" type="button">Наведи</button>
+              <div class="d-sq">1</div>
+              <div class="d-spin" aria-hidden="true"></div>
+              <div class="d-pulse" aria-hidden="true"></div>
+            </div>
+            <p class="effect" id="motion-effect"></p>
+            <figure class="code"><figcaption><span class="code__live">CSS примера</span></figcaption><pre class="snippet" id="motion-code"></pre></figure>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="slide slide--summary" id="summary" aria-labelledby="summary-title">
+      <div class="slide__inner">
+        <p class="kicker">Итог</p>
+        <h2 id="summary-title">Как читать CSS <span>без догадок</span></h2>
+        <ol class="summary summary--4">
+          <li><b>1. HTML</b> Какой элемент вообще есть на странице</li>
+          <li><b>2. Селектор</b> Кому достанется правило — и не достанется ли лишним</li>
+          <li><b>3. Свойство</b> Что именно меняется и кто победил в каскаде</li>
+          <li><b>4. Результат</b> Как это выглядит. Если не сходится — смотреть Styles и Computed</li>
+        </ol>
+        <p class="cover__actions">
+          <button class="btn btn--accent" type="button" data-action="css">Выключить CSS и проверить</button>
+          <a class="btn" href="#cover">В начало</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="deckbar">
+    <button class="round" type="button" data-action="prev" aria-label="Предыдущий слайд">←</button>
+    <progress class="deckbar__progress" id="deck-progress" max="36" value="1">1 из 36</progress>
+    <output class="deckbar__count" id="deck-count">1 / 27</output>
+    <button class="round round--accent" type="button" data-action="next" aria-label="Следующий слайд">→</button>
+  </footer>
+
+  <div class="hotkeys" id="hotkeys" popover>
+    <p class="hotkeys__title">Горячие клавиши</p>
+    <dl>
+      <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>листать слайды</dd></div>
+      <div><dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>первый и последний</dd></div>
+      <div><dt><kbd>X</kbd></dt><dd>инспектор: рамка, тег, display</dd></div>
+      <div><dt><kbd>C</kbd></dt><dd>выключить и вернуть CSS</dd></div>
+      <div><dt><kbd>T</kbd></dt><dd>светлая или тёмная тема</dd></div>
+      <div><dt><kbd>F</kbd></dt><dd>на весь экран</dd></div>
+      <div><dt><kbd>O</kbd></dt><dd>содержание</dd></div>
+    </dl>
+  </div>
+
+  <div class="xray-layer" id="xray-layer" aria-hidden="true"></div>
+  <div class="hl-box" id="hl-box" aria-hidden="true"></div>
+</body>
+</html>
